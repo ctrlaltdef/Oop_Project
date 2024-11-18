@@ -49,14 +49,13 @@ void Player::importAssets()
 
 void Player::animate(float dt)
 {
-    frameIndex += 4 * dt;
+    frameIndex += 57 * dt;
     if (frameIndex >= animations[status].size())
     {
         frameIndex = 0;
     }
     sprite.setTexture(animations[status][frameIndex]);
 }
-
 
 void Player::handleInput()
 {

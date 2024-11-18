@@ -13,8 +13,8 @@ const int TILE_SIZE = 64;
 
 // Overlay positions
 const std::map<std::string, sf::Vector2f> OVERLAY_POSITIONS = {
-    {"tool", sf::Vector2f(40, SCREEN_HEIGHT - 15)},
-    {"seed", sf::Vector2f(70, SCREEN_HEIGHT - 5)}
+    {"tool", sf::Vector2f(35, SCREEN_HEIGHT - 100)},
+    {"seed", sf::Vector2f(70, SCREEN_HEIGHT - 100)}
 };
 
 const std::map<std::string, sf::Vector2f> PLAYER_TOOL_OFFSET = {

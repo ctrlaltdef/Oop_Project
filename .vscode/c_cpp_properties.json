@@ -3,16 +3,25 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/include",
-                "${workspaceFolder}/src",
-                "C:/SFML-Progs/SFML-2.5.1/SFML-2.5.1/include"  // Update to your SFML path
+                "${workspaceFolder}/**",
+                "D:/Downloads/oopproject/Oop_Project/graphics",
+                "D:/Downloads/oopproject/Oop_Project/code/head+cpp"
             ],
             "defines": [],
             "windowsSdkVersion": "10.0.19041.0",
-            "compilerPath": "C:/mingw_dev_lib/mingw/mingw64/bin/g++.exe",  // Update this path to your g++ compiler
+            "compilerPath": "C:/mingw_dev_lib/mingw/mingw64/bin/g++.exe",
             "intelliSenseMode": "windows-gcc-x64",
             "cStandard": "c11",
-            "cppStandard": "c++17"
+            "cppStandard": "c++17",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "D:/Downloads/oopproject/Oop_Project/graphics",
+                    "D:/Downloads/oopproject/Oop_Project/code/head+cpp"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
         }
     ],
     "version": 4

@@ -11,7 +11,15 @@ g++ -c head+cpp\Level.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\includ
 g++ -c head+cpp\Player.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\Timer.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\Support.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+g++ -c head+cpp\Overlay.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+g++ -c head+cpp\Generic.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+g++ -c head+cpp\Water.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+g++ -c head+cpp\WildFlower.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+g++ -c head+cpp\Tree.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+
 g++ -c head+cpp\%1.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+
+
 
 
 rem Notify if successful or failed
@@ -22,7 +30,9 @@ if %errorlevel% equ 0 (
 )
 
 rem Link all object files
-g++ %1.o Game.o Level.o Player.o Timer.o Support.o -o %1 -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
+g++ %1.o Game.o Level.o Player.o Timer.o Support.o Overlay.o Generic.o Water.o WildFlower.o Tree.o -o %1 -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
+g++ Tree.o WildFlower.o Water.o Generic.o Overlay.o Player.o Game.o Level.o Timer.o Support.o -o main -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
+g++ %1.o Game.o Level.o Player.o Timer.o Support.o Overlay.o Generic.o Water.o WildFlower.o Tree.o -o %1 -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system -mconsole
 
 rem Notify if successful or failed
 if %errorlevel% equ 0 (
@@ -30,3 +40,11 @@ if %errorlevel% equ 0 (
 ) else (
     echo Linking failed.
 )
+
+
+
+
+
+
+
+

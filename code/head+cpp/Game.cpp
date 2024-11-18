@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Level.h"
 
 Game::Game() : window(sf::VideoMode(1280, 720), "Fields Of Fortune"), level(window) {
     window.setFramerateLimit(60);
@@ -19,3 +20,5 @@ void Game::run() {
         level.run(dt);
     }
 }
+
+
