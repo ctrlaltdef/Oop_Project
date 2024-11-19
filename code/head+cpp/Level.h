@@ -17,8 +17,8 @@ private:
     std::vector<Generic*> elements; 
     Player player;
     Overlay overlay;
-    sf::Sprite background; // Background sprite
-    sf::Texture backgroundTexture; // Background texture
+    sf::Sprite background; 
+    sf::Texture backgroundTexture; 
     std::vector<sf::Drawable*> drawables;
 
 public:

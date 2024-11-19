@@ -42,22 +42,12 @@ public:
     void handleInput();
     void update(float dt);
     void draw(sf::RenderWindow& window);
-    std::string getSelectedSeed() const {
-    return selectedSeed;
-    }
-    std::string getSelectedTool() const{
-        return selectedTool;
-    }
-    const std::vector<std::string>& getSeeds() const{
-        return seeds;
-    }
-    const std::vector<std::string>& getTools() const{
-        return tools;
-    }
-    sf::Sprite& getSprite(){
-        return sprite;
-    }
-  
+
+    std::string getSelectedSeed() const;
+    std::string getSelectedTool() const;
+    const std::vector<std::string>& getSeeds() const;
+    const std::vector<std::string>& getTools() const;
+    sf::Sprite& getSprite();  
 
 };
 

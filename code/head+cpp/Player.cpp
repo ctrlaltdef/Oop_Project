@@ -17,10 +17,10 @@ Player::Player(const sf::Vector2f &startPos)
 
     timers["tool use"] = Timer(350, [&]()
                                { useTool(); });
-    timers["tool switch"] = Timer(200, []() {}); // Empty callback
+    timers["tool switch"] = Timer(200, []() {});
     timers["seed use"] = Timer(350, [&]()
                                { useSeed(); });
-    timers["seed switch"] = Timer(200, []() {}); // Empty callback
+    timers["seed switch"] = Timer(200, []() {});
 
     importAssets();
     sprite.setTexture(animations[status][frameIndex]);
@@ -37,7 +37,6 @@ void Player::importAssets()
     for (const auto &dir : directions)
     {
         animations[dir] = importFolder("../graphics/character/" + dir);
-        std::cout << "Loaded animation for: " << dir << std::endl;
     }
     if (!animations[status].empty()) {
     sprite.setTexture(animations[status][frameIndex]);
@@ -49,7 +48,7 @@ void Player::importAssets()
 
 void Player::animate(float dt)
 {
-    frameIndex += 57 * dt;
+    frameIndex += 29.4 * dt;
     if (frameIndex >= animations[status].size())
     {
         frameIndex = 0;
@@ -168,11 +167,31 @@ void Player::draw(sf::RenderWindow &window)
 
 void Player::useTool()
 {
-    // Tool usage logic here
+  
 }
 
 void Player::useSeed()
 {
-    // Seed usage logic here
+    
 }
 
+
+std::string Player::getSelectedSeed() const {
+    return selectedSeed;
+}
+
+std::string Player::getSelectedTool() const {
+    return selectedTool;
+}
+
+const std::vector<std::string>& Player::getSeeds() const {
+    return seeds;
+}
+
+const std::vector<std::string>& Player::getTools() const {
+    return tools;
+}
+
+sf::Sprite& Player::getSprite() {
+    return sprite;
+}

@@ -7,7 +7,7 @@
 #include <vector>
 
 // Screen settings
-const int SCREEN_WIDTH = 1366;
+const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 const int TILE_SIZE = 64;
 

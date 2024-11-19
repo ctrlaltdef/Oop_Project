@@ -6,7 +6,7 @@ Timer::Timer(float duration, std::function<void()> callback)
 
 void Timer::activate() {
     active = true;
-    clock.restart();  // Restart the timer
+    clock.restart();  
 }
 
 void Timer::deactivate() {
@@ -17,7 +17,7 @@ void Timer::update() {
     if (active && clock.getElapsedTime().asMilliseconds() >= duration) {
         deactivate();
         if (callback) {
-            callback();  // Call the callback function if it exists
+            callback();  
         }
     }
 }

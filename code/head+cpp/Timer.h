@@ -6,11 +6,10 @@
 
 class Timer {
 private:
-    sf::Clock clock;   // For time tracking
-    float duration;    // Duration for timer
-    bool active;       // Active state of the timer
-    std::function<void()> callback;  // Callback function when timer ends
-
+    sf::Clock clock;   
+    float duration;    
+    bool active;       
+    std::function<void()> callback;  
 public:
     Timer();
     Timer(float duration, std::function<void()> callback = nullptr);

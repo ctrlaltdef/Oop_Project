@@ -12,14 +12,3 @@ void Water::update(float dt) {
     }
     sprite.setTexture(frames[static_cast<int>(frameIndex)]);
 }
-
-
-
-
-
-
-
-
-
-
-
