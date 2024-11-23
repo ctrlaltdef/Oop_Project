@@ -8,9 +8,12 @@
 #include "Timer.h"
 #include "Settings.h"
 #include "Support.h"
+#include "SoilLayer.h"
 
 class Player {
 private:
+    SoilLayer* soilLayer;
+    sf::Vector2f targetPosition;
     sf::Sprite sprite;
     sf::Texture texture;
     sf::Vector2f direction;
@@ -38,6 +41,7 @@ private:
     void useSeed();
 
 public:
+    void setSoilLayer(SoilLayer* layer) { soilLayer = layer; }
     Player(const sf::Vector2f& startPos);
     void handleInput();
     void update(float dt);

@@ -8,6 +8,7 @@
 #include "Tree.h"
 #include "Sky.h"
 
+
 Level::Level(sf::RenderWindow& window)
     : window(window), player(sf::Vector2f(500, 300)), overlay(window, &player), sky(window) {
     setup();
@@ -43,7 +44,10 @@ void Level::setup() {
 
     // Add background and player sprite to the drawable objects
     drawables.push_back(&background);
-    drawables.push_back(&player.getSprite());
+
+    soilLayer = SoilLayer(); // Initialize SoilLayer
+    player.setSoilLayer(&soilLayer); // Pass SoilLayer to the Player
+
 }
 
 void Level::reset(sf::RenderWindow& window) {
@@ -99,6 +103,11 @@ void Level::run(float dt) {
         window.draw(*element);
     }
 
+    soilLayer.draw(window); // Draw soil patches
+
+    // Draw the player (after soil patches)
+    player.update(dt);
+    player.draw(window);
     // Display overlay and sky
     sky.display(dt);
     overlay.display(camera);
