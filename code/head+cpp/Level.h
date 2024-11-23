@@ -10,12 +10,14 @@
 #include "Water.h"
 #include "WildFlower.h"
 #include "Tree.h"
+#include "Sky.h"
 
 class Level {
 private:
     sf::RenderWindow& window;
     std::vector<Generic*> elements; 
     Player player;
+    Sky sky;
     Overlay overlay;
     sf::Sprite background; 
     sf::Texture backgroundTexture; 
@@ -24,7 +26,9 @@ private:
 public:
     Level(sf::RenderWindow& window);
     void setup();
+    void reset(sf::RenderWindow& window);
     void run(float dt);
+
 };
 
 #endif

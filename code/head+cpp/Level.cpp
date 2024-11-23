@@ -5,9 +5,10 @@
 #include "Water.h"
 #include "WildFlower.h"
 #include "Tree.h"
+#include "Sky.h"
 
 Level::Level(sf::RenderWindow& window)
-    : window(window), player(sf::Vector2f(540, 300)), overlay(&player) {
+    : window(window), player(sf::Vector2f(540, 300)), overlay(&player), sky(&window) {
     setup();
 }
 
@@ -54,6 +55,13 @@ void Level::setup() {
     elements.push_back(water);
 }
 
+void Level::reset(sf::RenderWindow& window){
+    sf::RectangleShape fullSurf(sf::Vector2f(window.getSize().x, window.getSize().y));
+    fullSurf.setFillColor(sf::Color(255, 255, 255));
+    //Sky* sky = new Sky(&window);
+    //sky->setStartColor(sf::Color(255, 255, 255));
+}
+
 void Level::run(float dt) {
     window.clear(sf::Color::Black);
 
@@ -66,10 +74,11 @@ void Level::run(float dt) {
     });
 
     for (auto element : elements) {
-        element->update(dt);0
+        element->update(dt);
         window.draw(*element); 
     }
 
+    sky.display(dt);
     player.update(dt);
     overlay.display(window);
     window.display();
