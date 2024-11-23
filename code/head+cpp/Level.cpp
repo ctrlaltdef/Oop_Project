@@ -8,7 +8,7 @@
 #include "Sky.h"
 
 Level::Level(sf::RenderWindow& window)
-    : window(window), player(sf::Vector2f(540, 300)), overlay(&player), sky(&window) {
+    : window(window), player(sf::Vector2f(540, 300)), overlay(&player), sky(window) {
     setup();
     camera.setSize(static_cast<sf::Vector2f>(window.getSize()));
     camera.setCenter(player.getPosition());

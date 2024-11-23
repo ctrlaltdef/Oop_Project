@@ -2,8 +2,8 @@
 #include <iostream>
 
 
-Sky::Sky(sf::RenderWindow* window)
-    :displaySurface(window), fullSurf(sf::Vector2f(window->getSize().x, window->getSize().y)),
+Sky::Sky(sf::RenderWindow& window)
+    :displaySurface(window), fullSurf(static_cast<sf::Vector2f>(window.getSize())),
     start_color(sf::Color(255, 255, 255)), 
     end_color(sf::Color(38, 101, 189)) 
     {
@@ -12,7 +12,7 @@ Sky::Sky(sf::RenderWindow* window)
 
 void Sky::display(float dt){
     const float transitionRate = 0.000215f;
-
+    //0.000215f
     if (start_color.r > end_color.r) {
         start_color.r -= (transitionRate * dt);
     }
@@ -31,6 +31,12 @@ void Sky::display(float dt){
         start_color.b = 255;
     }
 
+    sf::View view = displaySurface.getView();
+    sf::Vector2f viewSize = view.getSize();
+    sf::Vector2f viewCenter = view.getCenter();
+    fullSurf.setSize(viewSize); // Ensure it covers the entire view
+    fullSurf.setPosition(viewCenter - (viewSize / 2.f));
+
     fullSurf.setFillColor(start_color);
-    displaySurface->draw(fullSurf, sf::BlendMultiply);
+    displaySurface.draw(fullSurf, sf::BlendMultiply);
 }
