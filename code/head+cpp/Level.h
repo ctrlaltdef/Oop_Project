@@ -22,6 +22,7 @@ private:
     sf::Sprite background; 
     sf::Texture backgroundTexture; 
     std::vector<sf::Drawable*> drawables;
+    sf::View camera;
 
 public:
     Level(sf::RenderWindow& window);

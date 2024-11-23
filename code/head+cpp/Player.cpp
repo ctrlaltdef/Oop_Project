@@ -195,3 +195,7 @@ const std::vector<std::string>& Player::getTools() const {
 sf::Sprite& Player::getSprite() {
     return sprite;
 }
+
+sf::Vector2f Player::getPosition() const {
+    return sprite.getPosition();
+}

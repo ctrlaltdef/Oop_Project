@@ -48,6 +48,7 @@ public:
     const std::vector<std::string>& getSeeds() const;
     const std::vector<std::string>& getTools() const;
     sf::Sprite& getSprite();  
+    sf::Vector2f getPosition() const ;
 
 };
 

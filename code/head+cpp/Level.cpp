@@ -10,6 +10,8 @@
 Level::Level(sf::RenderWindow& window)
     : window(window), player(sf::Vector2f(540, 300)), overlay(&player), sky(&window) {
     setup();
+    camera.setSize(static_cast<sf::Vector2f>(window.getSize()));
+    camera.setCenter(player.getPosition());
 }
 
 void Level::setup() {
@@ -17,7 +19,7 @@ void Level::setup() {
         std::cerr << "Error: Cant load background texture!" << std::endl;
     }
     background.setTexture(backgroundTexture);
-    float scaleFactor = 0.4f; 
+    float scaleFactor = 0.6f; 
     background.setScale(scaleFactor, scaleFactor);
 
     sf::Vector2u backgroundSize = backgroundTexture.getSize();
@@ -63,26 +65,35 @@ void Level::reset(sf::RenderWindow& window){
 }
 
 void Level::run(float dt) {
+    camera.setCenter(player.getPosition());
+    window.setView(camera); // Apply the view
     window.clear(sf::Color::Black);
 
     for (auto& drawable : drawables) {
         window.draw(*drawable);
     }
 
-    std::sort(elements.begin(), elements.end(), [](Generic* a, Generic* b) {
-        return a->z < b->z; 
-    });
 
     for (auto element : elements) {
         element->update(dt);
         window.draw(*element); 
     }
 
+    std::sort(elements.begin(), elements.end(), [](Generic* a, Generic* b) {
+        return a->z < b->z; 
+    });
+
     sky.display(dt);
     player.update(dt);
     overlay.display(window);
     window.display();
 }
+
+
+
+
+
+
 
 
 
