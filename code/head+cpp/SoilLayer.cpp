@@ -25,17 +25,6 @@ SoilLayer::SoilLayer() {
             grid[row][col].isFarmable = false;
         }
     }
-    // path
-    //   for (int row = 5; row <= 9; ++row) {        
-    //         grid[row][5].isFarmable = false;
-    //     }
-    //     for (int col = 6; col <= 9; ++col) {        
-    //         grid[8][col].isFarmable = false;
-    //     }
-    //     grid[7][8].isFarmable = false;
-    //     grid[9][8].isFarmable = false;
-    //     grid[9][7].isFarmable = false;
-    //     grid[9][6].isFarmable = false;
            grid[13][12].isFarmable = false;
 
     }
@@ -66,11 +55,45 @@ void SoilLayer::getHit(const sf::Vector2f& position) {
  }
 
 
+void SoilLayer::water(const sf::Vector2f& position) {
+    sf::Vector2i index = getTileIndex(position); // Convert position to grid index
+
+    // Check if the index is within bounds
+    if (index.x >= 0 && index.x < grid[0].size() &&
+        index.y >= 0 && index.y < grid.size()) {
+
+        TileState& tile = grid[index.y][index.x];
+
+        // Check if the tile has soil and can be watered
+        if (tile.hasSoil && !tile.isWatered) {
+            tile.isWatered = true;
+
+            // Create water sprite on top of the soil patch
+            sf::Sprite waterSprite;
+            if (!waterTexture.loadFromFile("../graphics/soil_water/0.png")) {
+                std::cerr << "Error: Could not load water texture!" << std::endl;
+                return;
+            }
+            waterSprite.setTexture(waterTexture);
+            waterSprite.setPosition(index.x * 64, index.y * 64);
+            waterSprites.push_back(waterSprite); // Store the water sprite
+
+            std::cout << "Watered soil patch at (" << index.y << ", " << index.x << ")" << std::endl;
+        } else {
+            std::cout << "Cannot water this tile: (" << index.y << ", " << index.x << ")" << std::endl;
+        }
+    } else {
+        std::cout << "Out of bounds: (" << index.y << ", " << index.x << ")" << std::endl;
+    }
+}
 
 
 void SoilLayer::draw(sf::RenderWindow& window) {
     for (auto& tile : soilTiles) {
         tile.draw(window);
+    }
+    for (auto& waterSprite : waterSprites) {
+        window.draw(waterSprite);
     }
 }
 

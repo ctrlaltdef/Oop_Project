@@ -177,9 +177,13 @@ void Player::draw(sf::RenderWindow &window)
 
 void Player::useTool()
 {
- if (selectedTool == "hoe" && soilLayer) {
+    if (selectedTool == "hoe" && soilLayer) {
         soilLayer->getHit(targetPosition);
     } 
+    else if (selectedTool == "water" && soilLayer)
+    {
+        soilLayer->water(targetPosition); // Call SoilLayer's water method
+    }
 }
 
 void Player::useSeed()
