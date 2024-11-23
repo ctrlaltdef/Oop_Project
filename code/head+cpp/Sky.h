@@ -6,13 +6,13 @@
 class Sky{
 
     private:
-        sf::RenderWindow* displaySurface;
+        sf::RenderWindow& displaySurface;
         sf::RectangleShape fullSurf;
         sf::Color start_color;
         sf::Color end_color;
 
     public:
-        Sky(sf::RenderWindow* window);
+        Sky(sf::RenderWindow& window);
         void display(float dt);
 };
 
