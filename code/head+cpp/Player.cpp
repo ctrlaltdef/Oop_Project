@@ -199,3 +199,7 @@ sf::Sprite& Player::getSprite() {
 sf::Vector2f Player::getPosition() const {
     return sprite.getPosition();
 }
+
+void Player::setPosition(const sf::Vector2f& position) {
+    sprite.setPosition(position);
+}
