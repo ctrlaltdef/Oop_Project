@@ -7,6 +7,7 @@
 #include "Overlay.h"
 #include "Sky.h"
 #include "Generic.h"
+#include "SoilLayer.h"
 
 class Level {
 public:
@@ -17,7 +18,6 @@ public:
     void setup();
     void reset(sf::RenderWindow& window);
     void run(float dt);
-
 private:
     sf::RenderWindow& window;            // Reference to the main game window
     sf::View camera;                     // Camera view for the level
@@ -33,6 +33,8 @@ private:
     // Player and UI elements
     Player player;
     Overlay overlay;
+    SoilLayer soilLayer;
+
 
     // Sky effect
     Sky sky;

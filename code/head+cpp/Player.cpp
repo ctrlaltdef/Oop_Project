@@ -156,6 +156,16 @@ void Player::update(float dt)
     handleInput();
     getStatus();
     updateTimers();
+
+    // Calculate target position based on player's direction
+    sf::Vector2f offset;
+    if (status.find("up") != std::string::npos) offset = {0, -64};
+    else if (status.find("down") != std::string::npos) offset = {0, 64};
+    else if (status.find("left") != std::string::npos) offset = {-64, 0};
+    else if (status.find("right") != std::string::npos) offset = {64, 0};
+
+    targetPosition = sprite.getPosition() + offset;
+
     move(dt);
     animate(dt);
 }
@@ -167,7 +177,13 @@ void Player::draw(sf::RenderWindow &window)
 
 void Player::useTool()
 {
-  
+    if (selectedTool == "hoe" && soilLayer) {
+        soilLayer->getHit(targetPosition);
+    } 
+    else if (selectedTool == "water" && soilLayer)
+    {
+        soilLayer->water(targetPosition); // Call SoilLayer's water method
+    }
 }
 
 void Player::useSeed()
