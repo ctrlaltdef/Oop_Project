@@ -163,12 +163,15 @@ void Player::update(float dt)
 
     // Calculate target position based on player's direction
     sf::Vector2f offset;
-    if (status.find("up") != std::string::npos) offset = {0, -64};
-    else if (status.find("down") != std::string::npos) offset = {0, 64};
-    else if (status.find("left") != std::string::npos) offset = {-64, 0};
-    else if (status.find("right") != std::string::npos) offset = {64, 0};
+    if (status.find("up") != std::string::npos) offset = {0,0};
+    else if (status.find("down") != std::string::npos) offset = {0, 0};
+    else if (status.find("left") != std::string::npos) offset = {0, 0};
+    else if (status.find("right") != std::string::npos) offset = {0, 0};
 
     targetPosition = sprite.getPosition() + offset;
+    targetPosition.x = std::round(targetPosition.x / 64) * 64; // Snap to nearest grid x
+    targetPosition.y = std::round(targetPosition.y / 64) * 64; // Snap to nearest grid y
+
 
     move(dt);
     animate(dt);

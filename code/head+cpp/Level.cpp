@@ -44,6 +44,7 @@ void Level::setup() {
 
     // Add background and player sprite to the drawable objects
     drawables.push_back(&background);
+    drawables.push_back(&player.getSprite());
 
     soilLayer = SoilLayer(); // Initialize SoilLayer
     player.setSoilLayer(&soilLayer); // Pass SoilLayer to the Player
@@ -64,9 +65,9 @@ T clamp(const T& value, const T& min, const T& max) {
 
 void Level::run(float dt) {
     // Update player position and constrain it to the ground bounds
-    player.update(dt);
-    sf::Vector2f playerPos = player.getPosition();
+    player.update(dt); // Update the player at the start
 
+    sf::Vector2f playerPos = player.getPosition();
     float playerWidth = player.getSprite().getGlobalBounds().width;
     float playerHeight = player.getSprite().getGlobalBounds().height;
 
@@ -88,33 +89,38 @@ void Level::run(float dt) {
     // Clear the window
     window.clear(sf::Color::Black);
 
-    // Draw all drawable objects
+    // Draw static elements (e.g., terrain or ground-level elements)
     for (auto& drawable : drawables) {
         window.draw(*drawable);
     }
 
-    // Sort elements by their "z" value and draw them
+    // Update and draw soil patches
+    soilLayer.draw(window);
+
+    // Update and sort dynamic elements based on their z-values
     std::sort(elements.begin(), elements.end(), [](Generic* a, Generic* b) {
         return a->z < b->z;
     });
 
-    for (auto element : elements) {
-        element->update(dt);
-        window.draw(*element);
+    for (auto& element : elements) {
+        element->update(dt);  // Update dynamic elements
+        window.draw(*element); // Draw them after updates
     }
 
-    soilLayer.draw(window); // Draw soil patches
-
-    // Draw the player (after soil patches)
-    player.update(dt);
+    // Draw the player (ensures player is above soil and other elements)
     player.draw(window);
-    // Display overlay and sky
-    sky.display(dt);
+
+    // Draw overlays (e.g., HUD, status effects)
     overlay.display(camera);
+
+    // Draw sky (background element)
+    sky.display(dt);
+
 
     // Present the rendered frame
     window.display();
 }
+
 
 
 

@@ -10,7 +10,6 @@ class Sky{
         sf::RectangleShape fullSurf;
         sf::Color start_color;
         sf::Color end_color;
-
     public:
         Sky(sf::RenderWindow& window);
         void display(float dt);
