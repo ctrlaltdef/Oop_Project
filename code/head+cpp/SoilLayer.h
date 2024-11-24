@@ -34,6 +34,7 @@ private:
     std::vector<sf::Sprite> plantSprites;
     sf::Vector2i getTileIndex(const sf::Vector2f& position); // Convert position to grid index
     std::vector<Plant> plants;
+    std::map<std::string, sf::Texture> seedTextures;
 
 
     
