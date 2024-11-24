@@ -34,7 +34,7 @@ void Sky::display(float dt){
     sf::View view = displaySurface.getView();
     sf::Vector2f viewSize = view.getSize();
     sf::Vector2f viewCenter = view.getCenter();
-    fullSurf.setSize(viewSize); // Ensure it covers the entire view
+    fullSurf.setSize(viewSize); 
     fullSurf.setPosition(viewCenter - (viewSize / 2.f));
 
     fullSurf.setFillColor(start_color);
