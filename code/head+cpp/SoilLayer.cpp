@@ -31,7 +31,7 @@ SoilLayer::SoilLayer() {
 
 
 sf::Vector2i SoilLayer::getTileIndex(const sf::Vector2f& position) {
-    return sf::Vector2i(static_cast<int>(position.x) / 64, static_cast<int>(position.y) / 64);
+    return sf::Vector2i(static_cast<int>(position.x / 64), static_cast<int>(position.y / 64));
 }
 
 void SoilLayer::getHit(const sf::Vector2f& position) {
@@ -43,7 +43,8 @@ void SoilLayer::getHit(const sf::Vector2f& position) {
         if (tile.isFarmable  && !tile.hasSoil) {
             tile.hasSoil = true;
            
-            soilTiles.emplace_back(sf::Vector2f(index.x * 64, index.y * 64), soilTexture);
+           sf::Vector2f tilePosition(index.x * 64, index.y * 64);
+            soilTiles.emplace_back(tilePosition, soilTexture);
             std::cout << "Soil patch created at (" << index.y << ", " << index.x << ")" << std::endl;
         }
         else {
@@ -68,6 +69,7 @@ void SoilLayer::water(const sf::Vector2f& position) {
         if (tile.hasSoil && !tile.isWatered) {
             tile.isWatered = true;
 
+            sf::Vector2f tilePosition(index.x * 64, index.y * 64);
             // Create water sprite on top of the soil patch
             sf::Sprite waterSprite;
             if (!waterTexture.loadFromFile("../graphics/soil_water/0.png")) {
@@ -96,4 +98,5 @@ void SoilLayer::draw(sf::RenderWindow& window) {
         window.draw(waterSprite);
     }
 }
+
 
