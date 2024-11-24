@@ -1,4 +1,5 @@
 #include "SoilLayer.h"
+#include "Plant.h"
 #include <iostream>
 
 SoilLayer::SoilLayer() {
@@ -88,12 +89,69 @@ void SoilLayer::water(const sf::Vector2f& position) {
 }
 
 
+void SoilLayer::plant_seeds(const sf::Vector2f& target_pos, const std::string& seed) {
+    sf::Vector2i index = getTileIndex(target_pos);
+
+    // Check if within bounds
+    if (index.x >= 0 && index.x < grid[0].size() &&
+        index.y >= 0 && index.y < grid.size()) {
+
+        TileState& tile = grid[index.y][index.x];
+
+        // Check if the tile has soil and is watered, and not already planted
+        if (tile.hasSoil && tile.isWatered && !tile.hasPlant) {
+            tile.hasPlant = true;
+
+            // Create a default texture and function for water checking
+
+            sf::Texture defaultTexture;
+            if(seed == "corn"){
+                defaultTexture.loadFromFile("../graphics/fruit/corn/0.png");
+            }
+            else if (seed == "tomato"){
+                defaultTexture.loadFromFile("../graphics/fruit/tomato/0.png");
+            }
+
+            auto waterCheckFunc = [&tile](const sf::Vector2f&) {
+                return tile.isWatered;
+            };
+
+            // Now instantiate the plant correctly with all required arguments
+            plants.emplace_back(seed, sf::Vector2f(index.x * 64, index.y * 64), defaultTexture, waterCheckFunc);
+            tile.plant = &plants.back();
+
+            sf::Sprite plantSprite;
+            plantSprite.setTexture(defaultTexture);
+            plantSprite.setPosition(index.x * 64, index.y * 64);
+            plantSprites.push_back(plantSprite);  // Store the plant sprite
+
+            std::cout << "Planted seed '" << seed << "' at (" << index.y << ", " << index.x << ")" << std::endl;
+        } else if (!tile.isWatered) {
+            std::cout << "Cannot plant here: Tile is not watered at (" << index.y << ", " << index.x << ")" << std::endl;
+        } else {
+            std::cout << "Cannot plant here: Tile already has a plant at (" << index.y << ", " << index.x << ")" << std::endl;
+        }
+    } else {
+        std::cout << "Out of bounds: (" << index.y << ", " << index.x << ")" << std::endl;
+    }
+}
+
+
+void SoilLayer::update_plants() {
+    for (auto& plant : plants) {
+        plant.grow();
+    }
+}
+
 void SoilLayer::draw(sf::RenderWindow& window) {
     for (auto& tile : soilTiles) {
         tile.draw(window);
     }
     for (auto& waterSprite : waterSprites) {
         window.draw(waterSprite);
+    }
+    for (auto& plantSprite : plantSprites) {
+        window.draw(plantSprite);
     }
 }
 

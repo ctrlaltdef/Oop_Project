@@ -124,6 +124,10 @@ void Player::getStatus()
     {
         status = status.substr(0, status.find("_")) + "_" + selectedTool;
     }
+    if (timers["seed use"].isActive())
+    {
+        status = status.substr(0, status.find("_")) + "_" + selectedSeed;
+    }
 }
 
 
@@ -188,7 +192,10 @@ void Player::useTool()
 
 void Player::useSeed()
 {
-    
+    if (selectedSeed != "" && soilLayer) {
+        // Call the soilLayer method to plant the seed at the target position
+        soilLayer->plant_seeds(targetPosition, selectedSeed);  // You need to implement this method in SoilLayer
+    }
 }
 
 
