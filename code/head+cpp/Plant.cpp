@@ -1,4 +1,5 @@
 #include "Plant.h"
+#include "SoilLayer.h"
 #include <iostream>
 
 // Constructor
@@ -31,19 +32,15 @@ Plant::Plant(const std::string& plantType, const sf::Vector2f& soilPosition, con
 }
 
 // Grow the plant
-void Plant::grow() {
-    if (checkWatered(position)) {
-        age += growSpeed;
+void Plant::grow(const std::string& seed, int count) {
 
         if (age >= maxAge) {
             age = maxAge;
             harvestable = true;
         }
-
-        sprite = frames[static_cast<int>(age)];
+        sprite = frames[age];
         sprite.setPosition(position);
         sprite.move(0, yOffset);
-    }
 }
 
 // Check if plant is harvestable

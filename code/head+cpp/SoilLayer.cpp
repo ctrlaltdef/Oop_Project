@@ -69,7 +69,7 @@ void SoilLayer::getHit(const sf::Vector2f& position) {
 }
 
 // Handle watering
-void SoilLayer::water(const sf::Vector2f& position) {
+void SoilLayer::water(const sf::Vector2f& position, const std::string& seed) {
     sf::Vector2i index = getTileIndex(position);
 
     if (index.x >= 0 && index.x < grid[0].size() &&
@@ -78,7 +78,7 @@ void SoilLayer::water(const sf::Vector2f& position) {
         TileState& tile = grid[index.y][index.x];
         if (tile.hasSoil && !tile.isWatered) {
             tile.isWatered = true;
-
+            count = 0;
             sf::Sprite waterSprite;
             if (!waterTexture.loadFromFile("../graphics/soil_water/0.png")) {
                 std::cerr << "Error: Could not load water texture!" << std::endl;
@@ -89,7 +89,24 @@ void SoilLayer::water(const sf::Vector2f& position) {
             waterSprite.setPosition(index.x * 64, index.y * 64);
             waterSprites.push_back(waterSprite);
             std::cout << "Watered soil patch at (" << index.y << ", " << index.x << ")" << std::endl;
-        } else {
+        } 
+        else if (tile.hasSoil && tile.hasPlant && count < 4 &&tile.isWatered) {
+            tile.isWatered = true;
+            count += 1;
+            sf::Sprite waterSprite;
+            if (!waterTexture.loadFromFile("../graphics/soil_water/0.png")) {
+                std::cerr << "Error: Could not load water texture!" << std::endl;
+                return;
+            }
+
+            waterSprite.setTexture(waterTexture);
+            waterSprite.setPosition(index.x * 64, index.y * 64);
+            waterSprites.push_back(waterSprite);
+            std::cout << "Watered soil patch at (" << index.y << ", " << index.x << ")" << std::endl;
+
+            update_plants(position, seed, count);
+        }
+        else {
             std::cout << "Cannot water this tile: (" << index.y << ", " << index.x << ")" << std::endl;
         }
     } else {
@@ -126,7 +143,8 @@ void SoilLayer::plant_seeds(const sf::Vector2f& target_pos, const std::string& s
             plantSprites.push_back(plantSprite);
 
             std::cout << "Planted seed '" << seed << "' at (" << index.y << ", " << index.x << ")" << std::endl;
-        } else {
+        } 
+        else {
             std::cerr << "Cannot plant seed here at (" << index.y << ", " << index.x << ")" << std::endl;
         }
     } else {
@@ -135,10 +153,27 @@ void SoilLayer::plant_seeds(const sf::Vector2f& target_pos, const std::string& s
 }
 
 // Update plant growth
-void SoilLayer::update_plants() {
+void SoilLayer::update_plants(const sf::Vector2f& target_pos, const std::string& seed, int count) {
     for (auto& plant : plants) {
-        plant.grow();
+            // Construct the new texture path based on the seed and count
+            std::string texturePath = "../graphics/fruit/" + seed + "/" + std::to_string(count) + ".png";
+            
+            if (!seedTextures[seed].loadFromFile(texturePath)) {
+                std::cerr << "Error: Could not load texture for " << seed << " at stage " << count << "!" << std::endl;
+                continue;
+            }
     }
+
+    // Update corresponding plant sprites
+    plantSprites.clear();
+    for (auto& plant : plants) {
+        sf::Sprite plantSprite;
+        plantSprite.setTexture(seedTextures[seed]);
+        plantSprite.setPosition(target_pos); // Assume `getPosition()` gets the plant's position
+        plantSprites.push_back(plantSprite);
+    }
+
+    std::cout << "Plants updated to growth stage: " << count << std::endl;
 }
 
 // Draw method

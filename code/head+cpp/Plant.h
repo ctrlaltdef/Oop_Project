@@ -1,6 +1,6 @@
 #ifndef PLANT_H
 #define PLANT_H
-
+#include "SoilLayer.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
@@ -11,10 +11,11 @@
 class Plant {
 public:
     Plant(const std::string& plantType, const sf::Vector2f& soilPosition, const sf::Texture& textureSheet, std::function<bool(const sf::Vector2f&)> checkWatered);
-    void grow();                  // Handle plant growth
+    void grow(const std::string& seed, int count);                  // Handle plant growth
     void draw(sf::RenderWindow& window); // Render plant on screen
 
     bool isHarvestable() const;   // Check if the plant is ready for harvest
+
 
 private:
     // Plant setup
@@ -25,6 +26,7 @@ private:
     sf::Sprite sprite;              // Current sprite for rendering
     sf::Vector2f position;          // Position of the plant
     std::function<bool(const sf::Vector2f&)> checkWatered; // Callback for water check
+
 
     // Growth mechanics
     float age = 0.0f;            // Current age of the plant

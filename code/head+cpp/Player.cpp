@@ -163,10 +163,10 @@ void Player::update(float dt)
 
     // Calculate target position based on player's direction
     sf::Vector2f offset;
-    if (status.find("up") != std::string::npos) offset = {0,0};
-    else if (status.find("down") != std::string::npos) offset = {0, 0};
-    else if (status.find("left") != std::string::npos) offset = {0, 0};
-    else if (status.find("right") != std::string::npos) offset = {0, 0};
+    if (status.find("up") != std::string::npos) offset = {0,-10};
+    else if (status.find("down") != std::string::npos) offset = {0, 50};
+    else if (status.find("left") != std::string::npos) offset = {-50, 40};
+    else if (status.find("right") != std::string::npos) offset = {50, 40};
 
     targetPosition = sprite.getPosition() + offset;
     targetPosition.x = std::round(targetPosition.x / 64) * 64; // Snap to nearest grid x
@@ -189,7 +189,7 @@ void Player::useTool()
     } 
     else if (selectedTool == "water" && soilLayer)
     {
-        soilLayer->water(targetPosition); // Call SoilLayer's water method
+        soilLayer->water(targetPosition, getSelectedSeed()); // Call SoilLayer's water method
     }
 }
 
