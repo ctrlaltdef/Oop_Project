@@ -153,28 +153,58 @@ void SoilLayer::plant_seeds(const sf::Vector2f& target_pos, const std::string& s
 }
 
 // Update plant growth
-void SoilLayer::update_plants(const sf::Vector2f& target_pos, const std::string& seed, int count) {
-    for (auto& plant : plants) {
-            // Construct the new texture path based on the seed and count
-            std::string texturePath = "../graphics/fruit/" + seed + "/" + std::to_string(count) + ".png";
+// void SoilLayer::update_plants(const sf::Vector2f& target_pos, const std::string& seed, int count) {
+//     for (auto& plant : plants) {
+//             // Construct the new texture path based on the seed and count
+//             std::string texturePath = "../graphics/fruit/" + seed + "/" + std::to_string(count) + ".png";
             
+//             if (!seedTextures[seed].loadFromFile(texturePath)) {
+//                 std::cerr << "Error: Could not load texture for " << seed << " at stage " << count << "!" << std::endl;
+//                 continue;
+//             }
+//     }
+
+//     // Update corresponding plant sprites
+//     // plantSprites.clear();
+//     for (auto& plant : plants) {
+//         sf::Sprite plantSprite;
+//         plantSprite.setTexture(seedTextures[seed]);
+//         plantSprite.setPosition(target_pos); // Assume `getPosition()` gets the plant's position
+//         plantSprites.push_back(plantSprite);
+//     }
+
+//     std::cout << "Plants updated to growth stage: " << count << std::endl;
+// }
+void SoilLayer::update_plants(const sf::Vector2f& target_pos, const std::string& seed, int count) {
+    sf::Vector2i index = getTileIndex(target_pos);
+
+    if (index.x >= 0 && index.x < grid[0].size() &&
+        index.y >= 0 && index.y < grid.size()) {
+
+        TileState& tile = grid[index.y][index.x];
+        if (tile.hasPlant) {
+            // Construct the new texture path for the specific seed and growth stage
+            std::string texturePath = "../graphics/fruit/" + seed + "/" + std::to_string(count) + ".png";
             if (!seedTextures[seed].loadFromFile(texturePath)) {
                 std::cerr << "Error: Could not load texture for " << seed << " at stage " << count << "!" << std::endl;
-                continue;
+                return;
             }
-    }
 
-    // Update corresponding plant sprites
-    plantSprites.clear();
-    for (auto& plant : plants) {
-        sf::Sprite plantSprite;
-        plantSprite.setTexture(seedTextures[seed]);
-        plantSprite.setPosition(target_pos); // Assume `getPosition()` gets the plant's position
-        plantSprites.push_back(plantSprite);
-    }
+            // Update the corresponding plant sprite
+            for (auto& plantSprite : plantSprites) {
+                if (plantSprite.getPosition() == sf::Vector2f(index.x * 64, index.y * 64)) {
+                    plantSprite.setTexture(seedTextures[seed]);
+                    break;
+                }
+            }
 
-    std::cout << "Plants updated to growth stage: " << count << std::endl;
+            std::cout << "Updated plant at (" << index.y << ", " << index.x << ") to stage " << count << std::endl;
+        }
+    } else {
+        std::cout << "Out of bounds: (" << index.y << ", " << index.x << ")" << std::endl;
+    }
 }
+
 
 // Draw method
 void SoilLayer::draw(sf::RenderWindow& window) {
