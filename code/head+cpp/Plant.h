@@ -10,8 +10,9 @@
 
 class Plant {
 public:
+    Plant();
     Plant(const std::string& plantType, const sf::Vector2f& soilPosition, const sf::Texture& textureSheet, std::function<bool(const sf::Vector2f&)> checkWatered);
-    void grow(const std::string& seed, int count);                  // Handle plant growth
+    void max(int count);                  // Handle plant growth
     void draw(sf::RenderWindow& window); // Render plant on screen
 
     bool isHarvestable() const;   // Check if the plant is ready for harvest
