@@ -1,13 +1,12 @@
 #ifndef PLANT_H
 #define PLANT_H
-#include "SoilLayer.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
 #include <functional>
 
 
-
+class SoilLayer;
 class Plant {
 public:
     Plant(const std::string& plantType, const sf::Vector2f& soilPosition, const sf::Texture& textureSheet, std::function<bool(const sf::Vector2f&)> checkWatered);

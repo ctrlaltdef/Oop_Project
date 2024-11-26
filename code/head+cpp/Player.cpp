@@ -4,7 +4,7 @@
 using namespace std;
 
 Player::Player(const sf::Vector2f &startPos)
-    : speed(200.0f), frameIndex(0), toolIndex(0), seedIndex(0), position(startPos)
+    : speed(200.0f), frameIndex(0), toolIndex(0), seedIndex(0), position(startPos), money(1000) 
 {
     status = "down_idle";
     direction = sf::Vector2f(0, 0);
@@ -229,3 +229,32 @@ sf::Vector2f Player::getPosition() const {
 void Player::setPosition(const sf::Vector2f& position) {
     sprite.setPosition(position);
 }
+
+
+
+
+void Player::interactWithMarket() {
+    std::cout << "Interacting with the market..." << std::endl;
+}
+
+Inventory& Player::getInventory() {
+    return inventory;
+}
+
+
+int Player::getMoney() const {
+    return money;
+}
+
+void Player::addMoney(int amount) {
+    money += amount;
+}
+
+bool Player::deductMoney(int amount) {
+    if (money >= amount) {
+        money -= amount;
+        return true;
+    }
+    return false;
+}
+

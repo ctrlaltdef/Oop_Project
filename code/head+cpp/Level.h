@@ -6,8 +6,8 @@
 #include "Player.h"
 #include "Overlay.h"
 #include "Sky.h"
-#include "Generic.h"
 #include "SoilLayer.h"
+#include "Market.h"
 
 class Level {
 public:
@@ -18,6 +18,9 @@ public:
     void setup();
     void reset(sf::RenderWindow& window);
     void run(float dt);
+    void setupMarket(); // Initialize market items and prices
+    void openMarket();
+    void handleEvent(const sf::Event &event);
 private:
     sf::RenderWindow& window;            // Reference to the main game window
     sf::View camera;                     // Camera view for the level
@@ -35,13 +38,17 @@ private:
     Overlay overlay;
     SoilLayer soilLayer;
 
-
     // Sky effect
     Sky sky;
 
     // Drawables and elements
     std::vector<sf::Drawable*> drawables;    // All drawable objects
-    std::vector<Generic*> elements;         // Game elements with layering
+
+    Market market;
+
+     bool marketActive;
+
+    void checkMarketProximity();
 };
 
 #endif // LEVEL_H

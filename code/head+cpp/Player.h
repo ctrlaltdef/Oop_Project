@@ -9,6 +9,8 @@
 #include "Settings.h"
 #include "Support.h"
 #include "SoilLayer.h"
+#include "Inventory.h"
+#include "Market.h"
 
 class Player {
 private:
@@ -40,6 +42,9 @@ private:
     void useTool();
     void useSeed();
 
+    Inventory inventory; 
+    int money;           
+
 public:
     void setSoilLayer(SoilLayer* layer) { soilLayer = layer; }
     Player(const sf::Vector2f& startPos);
@@ -54,6 +59,12 @@ public:
     sf::Sprite& getSprite();  
     sf::Vector2f getPosition() const ;
     void setPosition(const sf::Vector2f& position) ;
+
+    void interactWithMarket(); // Interaction with the market
+    Inventory& getInventory(); 
+    int getMoney() const;
+    void addMoney(int amount);
+    bool deductMoney(int amount);
 
 };
 

@@ -1,3 +1,47 @@
+@REM @echo off
+@REM rem Check if filename is provided
+@REM if "%1"=="" (
+@REM     echo Please provide the file name.
+@REM     exit /b
+@REM )
+
+@REM rem Compile all source files in the src/ directory
+@REM g++ -c head+cpp\Game.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\Level.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\Player.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\Timer.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\Support.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\Overlay.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\Sky.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\SoilLayer.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\SoilTile.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\Plant.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+@REM g++ -c head+cpp\%1.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+
+
+
+
+@REM rem Notify if successful or failed
+@REM if %errorlevel% equ 0 (
+@REM     echo Compilation successful.
+@REM ) else (
+@REM     echo Compilation failed.
+@REM )
+
+@REM rem Link all object files
+@REM g++ %1.o Game.o Level.o Player.o Timer.o Support.o Overlay.o  Sky.o SoilTile.o SoilLayer.o Plant.o -o %1 -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
+@REM g++ Plant.o SoilLayer.o SoilTile.o Sky.o  Overlay.o Player.o Game.o Level.o Timer.o Support.o -o main -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
+@REM g++ %1.o Game.o Level.o Player.o Timer.o Support.o Overlay.o  Sky.o SoilTile.o SoilLayer.o Plant.o -o %1 -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system -mconsole
+
+@REM rem Notify if successful or failed
+@REM if %errorlevel% equ 0 (
+@REM     echo Linking successful.
+@REM ) else (
+@REM     echo Linking failed.
+@REM )
+
+
+
 @echo off
 rem Check if filename is provided
 if "%1"=="" (
@@ -5,47 +49,40 @@ if "%1"=="" (
     exit /b
 )
 
-rem Compile all source files in the src/ directory
+rem Compile all source files in the head+cpp/ directory
 g++ -c head+cpp\Game.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\Level.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\Player.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\Timer.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\Support.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\Overlay.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
-g++ -c head+cpp\Generic.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
-g++ -c head+cpp\Water.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
-g++ -c head+cpp\WildFlower.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
-g++ -c head+cpp\Tree.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\Sky.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\SoilLayer.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\SoilTile.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\Plant.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+g++ -c head+cpp\Market.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
+g++ -c head+cpp\Inventory.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 g++ -c head+cpp\%1.cpp -Iinclude -IC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\include
 
-
-
-
-rem Notify if successful or failed
+rem Notify if compilation was successful or failed
 if %errorlevel% equ 0 (
     echo Compilation successful.
 ) else (
     echo Compilation failed.
+    exit /b
 )
 
 rem Link all object files
-g++ %1.o Game.o Level.o Player.o Timer.o Support.o Overlay.o Generic.o Water.o WildFlower.o Tree.o Sky.o SoilTile.o SoilLayer.o Plant.o -o %1 -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
-g++ Plant.o SoilLayer.o SoilTile.o Sky.o Tree.o WildFlower.o Water.o Generic.o Overlay.o Player.o Game.o Level.o Timer.o Support.o -o main -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
-g++ %1.o Game.o Level.o Player.o Timer.o Support.o Overlay.o Generic.o Water.o WildFlower.o Tree.o Sky.o SoilTile.o SoilLayer.o Plant.o -o %1 -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system -mconsole
+@REM g++ %1.o Game.o Level.o Player.o Timer.o Support.o Overlay.o Sky.o SoilTile.o SoilLayer.o Plant.o Inventory.o Market.o -o %1 -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system -mconsole
+g++ %1.o Game.o Level.o Player.o Timer.o Support.o Overlay.o Sky.o SoilTile.o SoilLayer.o Plant.o Market.o Inventory.o -o %1 -LC:\SFML-Progs\SFML-2.5.1\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
 
-rem Notify if successful or failed
+rem Notify if linking was successful or failed
 if %errorlevel% equ 0 (
     echo Linking successful.
 ) else (
     echo Linking failed.
+    exit /b
 )
-
-
-
 
 
 
