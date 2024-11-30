@@ -191,6 +191,9 @@ void Player::useTool()
     {
         soilLayer->water(targetPosition, getSelectedSeed()); // Call SoilLayer's water method
     }
+    if (selectedTool == "axe" && soilLayer) {
+        soilLayer->harvest(targetPosition);
+    } 
 }
 
 void Player::useSeed()

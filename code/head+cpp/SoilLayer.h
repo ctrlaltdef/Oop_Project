@@ -38,11 +38,7 @@ public:
     //plants
     void update_plants(const sf::Vector2f& target_pos, const std::string& seed, int count, TileState& tile);
     void plant_seeds(const sf::Vector2f& target_pos, const std::string& seed);
-    
-
-
-
-
+    void harvest(const sf::Vector2f& target_pos);
     
 };
 

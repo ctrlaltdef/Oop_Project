@@ -107,8 +107,11 @@ void SoilLayer::water(const sf::Vector2f& position, const std::string& seed) {
             // If tile has a plant and was watered, increment its growth counter
             if (tile.hasPlant && tile.isWatered && tile.growthCounter < 3) {
                 tile.growthCounter++;
+                std::cout << "Watered soil patch at (" << index.y << ", " << index.x << ")" << std::endl;
                 update_plants(position, seed, tile.growthCounter, tile);
             }
+
+
         } else {
             std::cout << "Cannot water this tile: (" << index.y << ", " << index.x << ")" << std::endl;
         }
@@ -181,6 +184,43 @@ void SoilLayer::update_plants(const sf::Vector2f& target_pos, const std::string&
         std::cout << "Out of bounds: (" << index.y << ", " << index.x << ")" << std::endl;
     }
 }
+
+// Harvesting
+void SoilLayer::harvest(const sf::Vector2f& target_pos) {
+    sf::Vector2i index = getTileIndex(target_pos);
+    TileState& tile = grid[index.y][index.x];
+    if (tile.hasPlant && tile.growthCounter >= 3){
+        std::cout << "Harvesting plant at (" << index.y << ", " << index.x << ")" << std::endl;
+    
+        // Reset plant and growth counter
+        tile.hasPlant = false;
+        tile.growthCounter = 0;
+        tile.plant = nullptr;
+
+        waterSprites.erase(std::remove_if(waterSprites.begin(), waterSprites.end(), 
+        [&](const sf::Sprite& waterSprite) {
+            return waterSprite.getPosition() == sf::Vector2f(index.x * 64, index.y * 64);
+        }), waterSprites.end());
+    
+        // Remove soil patch visuals
+        soilTiles.erase(std::remove_if(soilTiles.begin(), soilTiles.end(), 
+        [&](const SoilTile& soilTile) {
+            return soilTile.getPosition() == sf::Vector2f(index.x * 64, index.y * 64);
+        }), soilTiles.end());
+
+        tile.isFarmable = true;
+        tile.hasSoil = false;
+        tile.isWatered = false;
+        // Remove plant sprite from the list
+        for (auto it = plantSprites.begin(); it != plantSprites.end(); ++it) {
+            if (it->getPosition() == sf::Vector2f(index.x * 64, index.y * 64)) {
+                plantSprites.erase(it);
+                break;
+            }
+        }
+    }
+}
+
 // Draw method
 void SoilLayer::draw(sf::RenderWindow& window) {
     for (auto& tile : soilTiles) {
