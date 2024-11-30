@@ -242,7 +242,7 @@ Inventory& Player::getInventory() {
 }
 
 
-int Player::getMoney() const {
+int& Player::getMoney() {
     return money;
 }
 

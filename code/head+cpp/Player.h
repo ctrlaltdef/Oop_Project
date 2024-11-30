@@ -62,7 +62,7 @@ public:
 
     void interactWithMarket(); // Interaction with the market
     Inventory& getInventory(); 
-    int getMoney() const;
+    int& getMoney();
     void addMoney(int amount);
     bool deductMoney(int amount);
 

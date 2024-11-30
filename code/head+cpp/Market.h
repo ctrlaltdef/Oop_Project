@@ -6,11 +6,12 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include "Inventory.h"
 
 class Market {
 public:
     Market();
-    void render(sf::RenderWindow &window);
+    void render(sf::RenderWindow &window, const Inventory &inventory);
     void handleEvent(const sf::Event &event);
     void update(float dt);
     bool buyItem(const std::string &item, int quantity, int &playerMoney);
@@ -35,3 +36,4 @@ private:
 };
 
 #endif
+

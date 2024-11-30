@@ -115,6 +115,7 @@
 #include "Settings.h"
 #include "Sky.h"
 #include "MarketUI.h"
+#include "Player.h"
 #include <cmath>
 
 // Constructor
@@ -216,7 +217,8 @@ void Level::run(float dt) {
 
     // If the market is active, draw its UI
     if (marketActive) {
-        market.render(window);
+         market.render(window, player.getInventory()); // Pass inventory to the market UI
+        handleMarketInteraction();
     }
 
     // Draw overlays (e.g., HUD, status effects)
@@ -251,4 +253,21 @@ void Level::checkMarketProximity() {
     }
 }
 
+
+void Level::handleMarketInteraction() {
+    int& playerMoney = player.getMoney();  // Get player's money as a reference
+
+    // Example: Buying or selling a specific item (e.g., "Corn")
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+        if (market.buyItem("Corn", 1, playerMoney)) { // Buy 1 corn
+            player.getInventory().addItem("Corn", 1); // Add 1 corn to inventory
+        }
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        if (market.sellItem("Corn", 1, playerMoney)) { // Sell 1 corn
+            player.getInventory().removeItem("Corn", 1); // Remove 1 corn from inventory
+        }
+    }
+}
 

@@ -11,7 +11,7 @@ Sky::Sky(sf::RenderWindow& window)
 }
 
 void Sky::display(float dt){
-    const float transitionRate = 0.000225f;
+    const float transitionRate = 0.000125f;
 
     if (start_color.r > end_color.r) {
         start_color.r -= (transitionRate * dt);

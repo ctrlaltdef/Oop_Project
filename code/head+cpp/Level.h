@@ -21,6 +21,7 @@ public:
     void setupMarket(); // Initialize market items and prices
     void openMarket();
     void handleEvent(const sf::Event &event);
+    void handleMarketInteraction();
 private:
     sf::RenderWindow& window;            // Reference to the main game window
     sf::View camera;                     // Camera view for the level

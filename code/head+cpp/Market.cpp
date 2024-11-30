@@ -1,5 +1,6 @@
 // Market.cpp
 #include "Market.h"
+#include "Inventory.h"
 
 Market::Market() {
     // Load font and set up UI elements
@@ -33,19 +34,34 @@ Market::Market() {
         item.label.setPosition(130, y);
 
         item.button.setSize(sf::Vector2f(100, 40));
-        item.button.setFillColor(sf::Color::Green);
+        item.button.setFillColor(sf::Color::White);
         item.button.setPosition(300, y);
 
         y += 60;
     }
 }
 
-void Market::render(sf::RenderWindow &window) {
+void Market::render(sf::RenderWindow &window, const Inventory &inventory) {
+    // Draw background and title
     window.draw(background);
     window.draw(title);
+    
+    // Render market items and check inventory for each
     for (const auto &item : items) {
         window.draw(item.label);
         window.draw(item.button);
+
+        // Example: Show item quantity in inventory
+        int itemCount = inventory.getItemCount(item.name);
+        if (itemCount > 0) {
+            sf::Text quantityText;
+            quantityText.setString("Owned: " + std::to_string(itemCount));
+            quantityText.setPosition(item.label.getPosition().x, item.label.getPosition().y + 20);
+            quantityText.setCharacterSize(14); // Adjust text size as needed
+            quantityText.setFillColor(sf::Color::White);
+
+            window.draw(quantityText);
+        }
     }
 }
 

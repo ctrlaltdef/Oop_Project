@@ -1,20 +1,17 @@
-// Inventory.cpp
 #include <iostream>
 #include "Inventory.h"
 
 Inventory::Inventory() {}
 
 void Inventory::addItem(const std::string &item, int quantity) {
-    if (items.size() >= capacity && items.find(item) == items.end()) {
-        std::cout << "Inventory is full!" << std::endl;
-        return;
+    if (items.find(item) == items.end()) {
+        items[item] = 0;  // Add item if not present
     }
     items[item] += quantity;
 }
 
-
 bool Inventory::removeItem(const std::string &item, int quantity) {
-    if (items[item] >= quantity) {
+    if (items.find(item) != items.end() && items[item] >= quantity) {
         items[item] -= quantity;
         return true;
     }
@@ -22,19 +19,22 @@ bool Inventory::removeItem(const std::string &item, int quantity) {
 }
 
 int Inventory::getItemCount(const std::string &item) const {
-    return items.at(item);
+    if (items.find(item) != items.end()) {
+        return items.at(item);
+    }
+    return 0; // Return 0 if item not found
 }
 
 void Inventory::render(sf::RenderWindow &window) {
     sf::Font font;
-    if (!font.loadFromFile("../fonts/arial.ttf")) { // Adjust the path as necessary
+    if (!font.loadFromFile("../font/LycheeSoda.ttf")) {
         std::cerr << "Error loading font!" << std::endl;
         return;
     }
 
-    float startX = 50.0f; // Starting X position
-    float startY = 50.0f; // Starting Y position
-    float spacing = 30.0f; // Spacing between items
+    float startX = 50.0f;
+    float startY = 50.0f;
+    float spacing = 30.0f;
 
     int index = 0;
     for (const auto &item : items) {
