@@ -38,7 +38,6 @@ SoilLayer::SoilLayer() {
     grid[13][12].isFarmable = false;
 }
 
-
 // Load seed textures for a specific seed
 std::vector<sf::Texture> SoilLayer::loadSeedTextures(const std::string& seed) {
     std::vector<sf::Texture> textures;
@@ -53,7 +52,6 @@ std::vector<sf::Texture> SoilLayer::loadSeedTextures(const std::string& seed) {
     }
     return textures;
 }
-
 
 // Convert world position to grid index
 sf::Vector2i SoilLayer::getTileIndex(const sf::Vector2f& position) {
@@ -133,10 +131,24 @@ void SoilLayer::plant_seeds(const sf::Vector2f& target_pos, const std::string& s
                   << "Has Soil: " << tile.hasSoil
                   << ", Is Watered: " << tile.isWatered
                   << ", Has Plant: " << tile.hasPlant << std::endl;
+        
+        std::string inventorySeedName;
+
+        if (seed == "tomato") {
+            inventorySeedName = "Tomato Seed";
+        } else if (seed == "corn") {
+            inventorySeedName = "Corn Seed";
+        } else {
+            inventorySeedName = seed; // Default to the original name if unrecognized
+        }
 
         // Check if the player has enough seeds in the inventory
-        int seedCount = player.getInventory().getItemCount(seed);
+        int seedCount = player.getInventory().getItemCount(inventorySeedName);
         std::cout << "Player seed count for " << seed << ": " << seedCount << std::endl;
+
+        if (seedCount <= 0) {
+            return; // Don't allow planting if no seeds are available
+        }
         if (tile.hasSoil && tile.isWatered && !tile.hasPlant) {
             tile.hasPlant = true;
             tile.cropType = seed; // Set the crop type
@@ -160,20 +172,13 @@ void SoilLayer::plant_seeds(const sf::Vector2f& target_pos, const std::string& s
             plantSprite.setPosition(tilePosition);
             plantSprites.push_back(plantSprite);
 
-            std::string inventorySeedName;
-
-            if (seed == "tomato") {
-                inventorySeedName = "Tomato Seed";
-            } else if (seed == "corn") {
-                inventorySeedName = "Corn Seed";
-            } else {
-                inventorySeedName = seed; // Default to the original name if unrecognized
-            }
-
             // Remove one seed from the player's inventory after planting
-            player.getInventory().removeItem(inventorySeedName, 2);
+            player.getInventory().removeItem(inventorySeedName, 1);
             std::cout << "Removed 1 seed from player's inventory. New count: " 
                     << player.getInventory().getItemCount(inventorySeedName) << std::endl;
+
+
+
 
             std::cout << "Planted seed '" << seed << "' at (" << index.y << ", " << index.x << ")" << std::endl;
         } else {
