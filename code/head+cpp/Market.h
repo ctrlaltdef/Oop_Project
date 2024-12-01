@@ -8,15 +8,15 @@
 #include <unordered_map>
 #include "Inventory.h"
 
+
+class Player;
+
 class Market {
 public:
     Market();
-    void render(sf::RenderWindow &window, const Inventory &inventory);
-    void handleEvent(const sf::Event &event);
-    void update(float dt);
-    bool buyItem(const std::string &item, int quantity, int &playerMoney);
-    bool sellItem(const std::string &item, int quantity, int &playerMoney);
-
+    void render(sf::RenderWindow& window, const Inventory& inventory, int playerMoney);
+    bool buyItem(const std::string &item, int quantity, Player &player);
+    bool sellItem(const std::string &item, int quantity, Player &player);
 private:
     sf::Font font;
     sf::Text title;
@@ -26,13 +26,11 @@ private:
         std::string name;
         int price;
         sf::Text label;
-        sf::RectangleShape button;
+        sf::Text quantityText;
     };
 
     std::vector<Item> items;
     std::unordered_map<std::string, int> prices;
-
-    void loadAssets();
 };
 
 #endif

@@ -40,14 +40,13 @@ private:
     void updateTimers();
     void getStatus();
     void useTool();
-    void useSeed();
-
+    void useSeed(sf::RenderWindow& window);
     Inventory inventory; 
-    int money;           
+    int money;    
 
 public:
     void setSoilLayer(SoilLayer* layer) { soilLayer = layer; }
-    Player(const sf::Vector2f& startPos);
+    Player(const sf::Vector2f& startPos, sf::RenderWindow& window);
     void handleInput();
     void update(float dt);
     void draw(sf::RenderWindow& window);
@@ -60,12 +59,12 @@ public:
     sf::Vector2f getPosition() const ;
     void setPosition(const sf::Vector2f& position) ;
 
-    void interactWithMarket(); // Interaction with the market
-    Inventory& getInventory(); 
-    int& getMoney();
+    Inventory &getInventory(); 
+    int &getMoney();
     void addMoney(int amount);
-    bool deductMoney(int amount);
+    void deductMoney(int amount);
 
+    
 };
 
 #endif // PLAYER_H

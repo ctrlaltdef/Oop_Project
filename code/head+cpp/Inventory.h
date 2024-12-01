@@ -14,8 +14,6 @@ public:
     bool removeItem(const std::string &item, int quantity = 1);
     int getItemCount(const std::string &item) const;
 
-    void render(sf::RenderWindow &window);
-
 private:
     size_t capacity;
     std::unordered_map<std::string, int> items;

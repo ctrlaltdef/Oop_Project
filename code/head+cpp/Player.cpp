@@ -3,8 +3,8 @@
 #include <iostream>
 using namespace std;
 
-Player::Player(const sf::Vector2f &startPos)
-    : speed(200.0f), frameIndex(0), toolIndex(0), seedIndex(0), position(startPos), money(1000) 
+Player::Player(const sf::Vector2f &startPos, sf::RenderWindow& window)
+    : speed(200.0f), frameIndex(0), toolIndex(0), seedIndex(0), position(startPos), money(200) 
 {
     status = "down_idle";
     direction = sf::Vector2f(0, 0);
@@ -19,7 +19,7 @@ Player::Player(const sf::Vector2f &startPos)
                                { useTool(); });
     timers["tool switch"] = Timer(200, []() {});
     timers["seed use"] = Timer(350, [&]()
-                               { useSeed(); });
+                               { useSeed(window); });
     timers["seed switch"] = Timer(200, []() {});
 
     importAssets();
@@ -185,19 +185,21 @@ void Player::draw(sf::RenderWindow &window)
 void Player::useTool()
 {
     if (selectedTool == "hoe" && soilLayer) {
-        soilLayer->getHit(targetPosition);
+        soilLayer->getHit(targetPosition); // Hoe functionality
     } 
-    else if (selectedTool == "water" && soilLayer)
-    {
-        soilLayer->water(targetPosition, getSelectedSeed()); // Call SoilLayer's water method
+    else if (selectedTool == "water" && soilLayer) {
+        soilLayer->water(targetPosition, getSelectedSeed()); // Water functionality
+    } 
+    else if (selectedTool == "axe" && soilLayer) {
+        soilLayer->harvest(targetPosition, *this); // Harvest functionality, pass Player instance
     }
 }
 
-void Player::useSeed()
+void Player::useSeed(sf::RenderWindow& window)
 {
     if (selectedSeed != "" && soilLayer) {
         // Call the soilLayer method to plant the seed at the target position
-        soilLayer->plant_seeds(targetPosition, selectedSeed);  // You need to implement this method in SoilLayer
+        soilLayer->plant_seeds(targetPosition, selectedSeed, *this, window);  // You need to implement this method in SoilLayer
     }
 }
 
@@ -231,12 +233,6 @@ void Player::setPosition(const sf::Vector2f& position) {
 }
 
 
-
-
-void Player::interactWithMarket() {
-    std::cout << "Interacting with the market..." << std::endl;
-}
-
 Inventory& Player::getInventory() {
     return inventory;
 }
@@ -250,11 +246,9 @@ void Player::addMoney(int amount) {
     money += amount;
 }
 
-bool Player::deductMoney(int amount) {
+
+void Player::deductMoney(int amount) {
     if (money >= amount) {
         money -= amount;
-        return true;
     }
-    return false;
 }
-

@@ -6,6 +6,8 @@
 #include "SoilTile.h"
 #include "Plant.h"
 
+class Player; 
+
 class SoilLayer {
 protected:
     struct TileState {
@@ -14,6 +16,7 @@ protected:
         bool isWatered = false;
         bool hasPlant = false;
         Plant* plant = nullptr;
+        std::string cropType;
         int growthCounter = 0;
     };
 
@@ -27,7 +30,6 @@ protected:
     std::vector<Plant> plants;
     std::map<std::string, std::vector<sf::Texture>> seedTextures;
 
-
 public:
     std::vector<sf::Texture> loadSeedTextures(const std::string& seed);
     SoilLayer();
@@ -37,13 +39,9 @@ public:
 
     //plants
     void update_plants(const sf::Vector2f& target_pos, const std::string& seed, int count, TileState& tile);
-    void plant_seeds(const sf::Vector2f& target_pos, const std::string& seed);
-    
-
-
-
-
-    
+    //void plant_seeds(const sf::Vector2f& target_pos, const std::string& seed);
+    void plant_seeds(const sf::Vector2f& target_pos, const std::string& seed, Player& player, sf::RenderWindow& window);
+    void harvest(const sf::Vector2f &target_pos, Player &player); 
 };
 
 #endif

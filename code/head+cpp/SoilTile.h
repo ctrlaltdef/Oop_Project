@@ -6,7 +6,7 @@
 class SoilTile {
 public:
     SoilTile(const sf::Vector2f& position, sf::Texture& texture);
-
+    sf::Vector2f getPosition() const;
     void draw(sf::RenderWindow& window);
 
 private:

@@ -36,3 +36,4 @@ std::vector<sf::Texture> importFolder(const std::string& path) {
     closedir(dir);  // Close the directory
     return textureList;
 }
+

@@ -1,50 +1,55 @@
-#include <iostream>
 #include "Inventory.h"
+#include <iostream>
+#include "Support.h"
 
 Inventory::Inventory() {}
 
+// Add item to inventory
 void Inventory::addItem(const std::string &item, int quantity) {
-    if (items.find(item) == items.end()) {
-        items[item] = 0;  // Add item if not present
+    if (quantity <= 0) {
+        return; // Ignore invalid quantities
     }
+
+    // Debug: print the item being added
+    std::cout << "Adding " << quantity << " " << item << "(s) to inventory." << std::endl;
+
     items[item] += quantity;
+
+    // Debug: print the current inventory count for the item
+    std::cout << "Current inventory count for " << item << ": " << items[item] << std::endl;
 }
 
+// Remove item from inventory
 bool Inventory::removeItem(const std::string &item, int quantity) {
+    if (quantity <= 0) {
+        return false; // Invalid quantity
+    }
+
     if (items.find(item) != items.end() && items[item] >= quantity) {
         items[item] -= quantity;
+        if (items[item] == 0) {
+            items.erase(item);
+        }
         return true;
     }
-    return false;
+
+    return false; // Item not found or not enough quantity
 }
 
+// Get item count from inventory
 int Inventory::getItemCount(const std::string &item) const {
+    int count = 0;
+
+    // Debug: print the item being checked
+    std::cout << "Getting item count for " << item << std::endl;
+
     if (items.find(item) != items.end()) {
-        return items.at(item);
+        count = items.at(item);
     }
-    return 0; // Return 0 if item not found
+
+    // Debug: print the found count
+    std::cout << "Item count for " << item << ": " << count << std::endl;
+
+    return count;
 }
 
-void Inventory::render(sf::RenderWindow &window) {
-    sf::Font font;
-    if (!font.loadFromFile("../font/LycheeSoda.ttf")) {
-        std::cerr << "Error loading font!" << std::endl;
-        return;
-    }
-
-    float startX = 50.0f;
-    float startY = 50.0f;
-    float spacing = 30.0f;
-
-    int index = 0;
-    for (const auto &item : items) {
-        sf::Text text;
-        text.setFont(font);
-        text.setString(item.first + ": " + std::to_string(item.second));
-        text.setCharacterSize(20);
-        text.setFillColor(sf::Color::White);
-        text.setPosition(startX, startY + index * spacing);
-        window.draw(text);
-        ++index;
-    }
-}
