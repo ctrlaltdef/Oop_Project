@@ -5,10 +5,11 @@
 #include <vector>
 #include "SoilTile.h"
 #include "Plant.h"
+#include "Generic.h"
 
 class Player; 
 
-class SoilLayer {
+class SoilLayer: public Generic {
 protected:
     struct TileState {
         bool isFarmable = false; // Whether the tile can be farmed
@@ -39,7 +40,6 @@ public:
 
     //plants
     void update_plants(const sf::Vector2f& target_pos, const std::string& seed, int count, TileState& tile);
-    //void plant_seeds(const sf::Vector2f& target_pos, const std::string& seed);
     void plant_seeds(const sf::Vector2f& target_pos, const std::string& seed, Player& player, sf::RenderWindow& window);
     void harvest(const sf::Vector2f &target_pos, Player &player); 
 };

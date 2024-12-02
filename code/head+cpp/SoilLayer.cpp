@@ -98,8 +98,7 @@ void SoilLayer::water(const sf::Vector2f& position, const std::string& seed) {
                     std::cerr << "Error: Could not load water texture!" << std::endl;
                     return;
                 }
-                waterSprite.setTexture(waterTexture);
-                waterSprite.setPosition(index.x * 64, index.y * 64);
+                Generic::setSpriteAttributes(waterSprite, waterTexture, sf::Vector2f(index.x * 64.f, index.y * 64.f));
                 waterSprites.push_back(waterSprite);
 
                 std::cout << "Watered soil patch at (" << index.y << ", " << index.x << ")" << std::endl;
@@ -168,16 +167,13 @@ void SoilLayer::plant_seeds(const sf::Vector2f& target_pos, const std::string& s
 
             // Create and store the plant sprite
             sf::Sprite plantSprite;
-            plantSprite.setTexture(texture);
-            plantSprite.setPosition(tilePosition);
+            Generic::setSpriteAttributes(plantSprite,texture, tilePosition);
             plantSprites.push_back(plantSprite);
 
             // Remove one seed from the player's inventory after planting
             player.getInventory().removeItem(inventorySeedName, 1);
             std::cout << "Removed 1 seed from player's inventory. New count: " 
                     << player.getInventory().getItemCount(inventorySeedName) << std::endl;
-
-
 
 
             std::cout << "Planted seed '" << seed << "' at (" << index.y << ", " << index.x << ")" << std::endl;
