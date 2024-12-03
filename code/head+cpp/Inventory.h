@@ -15,7 +15,6 @@ public:
     int getItemCount(const std::string &item) const;
 
 private:
-    size_t capacity;
     std::unordered_map<std::string, int> items;
 };
 

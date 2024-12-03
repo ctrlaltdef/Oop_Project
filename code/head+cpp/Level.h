@@ -11,48 +11,30 @@
 
 class Level {
 public:
-    // Constructor
     Level(sf::RenderWindow& window);
-
-    // Member functions
     void setup();
-    void reset(sf::RenderWindow& window);
     void run(float dt);
-    void setupMarket(); // Initialize market items and prices
-    void openMarket();
-    void handleEvent(const sf::Event &event);
     void handleMarketInteraction();
-private:
-    sf::RenderWindow& window;            // Reference to the main game window
-    sf::View camera;                     // Camera view for the level
+    void checkMarketProximity();
 
-    // Background
+private:
+    sf::RenderWindow& window;
+    sf::View camera;
+
     sf::Texture backgroundTexture;
     sf::Sprite background;
 
-    // Ground boundaries
     float groundWidth = 0.0f;
     float groundHeight = 0.0f;
 
-    // Player and UI elements
     Player player;
     Overlay overlay;
     SoilLayer soilLayer;
-
-    // Sky effect
     Sky sky;
-
-    // Drawables and elements
-    std::vector<sf::Drawable*> drawables;    // All drawable objects
-
+    std::vector<sf::Drawable*> drawables;
     Market market;
 
-     bool marketActive;
-
-    void checkMarketProximity();
+    bool marketActive;
 };
 
-#endif // LEVEL_H
-
-
-
+#endif

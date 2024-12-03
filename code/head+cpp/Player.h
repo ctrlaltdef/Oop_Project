@@ -6,7 +6,6 @@
 #include <vector>
 #include <string>
 #include "Timer.h"
-#include "Settings.h"
 #include "Support.h"
 #include "SoilLayer.h"
 #include "Inventory.h"

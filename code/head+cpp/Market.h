@@ -1,4 +1,3 @@
-// Market.h
 #ifndef MARKET_H
 #define MARKET_H
 
@@ -8,7 +7,6 @@
 #include <unordered_map>
 #include "Inventory.h"
 
-
 class Player;
 
 class Market {
@@ -17,6 +15,7 @@ public:
     void render(sf::RenderWindow& window, const Inventory& inventory, int playerMoney);
     bool buyItem(const std::string &item, int quantity, Player &player);
     bool sellItem(const std::string &item, int quantity, Player &player);
+
 private:
     sf::Font font;
     sf::Text title;
@@ -34,4 +33,3 @@ private:
 };
 
 #endif
-

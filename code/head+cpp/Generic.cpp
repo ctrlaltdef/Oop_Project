@@ -2,7 +2,6 @@
 #include <iostream>
 
 
-
 Generic::Generic (const sf::Vector2f& position, const sf::Texture& texture) {
     sprite.setTexture(texture);
     sprite.setPosition(position);
@@ -16,7 +15,7 @@ void Generic::setSpriteAttributes(sf::Sprite& sprited, const sf::Texture& textur
 sf::Vector2f Generic::getPosition() const {
     return sprite.getPosition();
 }
-void Generic::setPosition(const sf::Vector2f& position) { // Fixed scope
+void Generic::setPosition(const sf::Vector2f& position) { 
     sprite.setPosition(position);
 }
 
