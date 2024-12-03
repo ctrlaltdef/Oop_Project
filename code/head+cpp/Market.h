@@ -7,29 +7,31 @@
 #include <unordered_map>
 #include "Inventory.h"
 
+// Forward declaration of Player class to avoid circular dependency
 class Player;
 
 class Market {
 public:
-    Market();
-    void render(sf::RenderWindow& window, const Inventory& inventory, int playerMoney);
-    bool buyItem(const std::string &item, int quantity, Player &player);
-    bool sellItem(const std::string &item, int quantity, Player &player);
+    Market();  // Constructor initializes the market
+    void render(sf::RenderWindow& window, const Inventory& inventory, int playerMoney);  // Renders market interface
+    bool buyItem(const std::string &item, int quantity, Player &player);  // Buys item from market
+    bool sellItem(const std::string &item, int quantity, Player &player);  // Sells item to market
 
 private:
-    sf::Font font;
-    sf::Text title;
-    sf::RectangleShape background;
+    sf::Font font;  // Font for text
+    sf::Text title;  // Title text for the market
+    sf::RectangleShape background;  // Background shape for the market interface
 
+    // Inner structure for items in the market
     struct Item {
-        std::string name;
-        int price;
-        sf::Text label;
-        sf::Text quantityText;
+        std::string name;  // Name of the item
+        int price;  // Price of the item
+        sf::Text label;  // Label text to display item name and price
+        sf::Text quantityText;  // Text displaying quantity owned by the player
     };
 
-    std::vector<Item> items;
-    std::unordered_map<std::string, int> prices;
+    std::vector<Item> items;  // List of items for sale in the market
+    std::unordered_map<std::string, int> prices;  // Prices of the items
 };
 
 #endif
